@@ -1,0 +1,8 @@
+CREATE TABLE recipes (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    cuisine VARCHAR(100),
+    rating FLOAT,
+    total_time VARCHAR(50),
+    serves INT
+);
