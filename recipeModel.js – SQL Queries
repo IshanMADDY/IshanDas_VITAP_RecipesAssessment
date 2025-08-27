@@ -1,0 +1,11 @@
+const pool = require('../db');
+
+exports.getRecipes = async (page, limit) => {
+  const offset = (page - 1) * limit;
+  const result = await pool.query(
+    'SELECT * FROM recipes ORDER BY id LIMIT $1 OFFSET $2',
+    [limit, offset]
+  );
+  const countResult = await pool.query('SELECT COUNT(*) FROM recipes');
+  return { data: result.rows, total: parseInt(countResult.rows[0].count) };
+};
