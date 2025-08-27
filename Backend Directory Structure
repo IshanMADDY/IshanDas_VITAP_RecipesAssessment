@@ -1,0 +1,11 @@
+recipe-backend/
+│── server.js        # Main entry point
+│── db.js            # Database connection setup
+│── routes/
+│    └── recipeRoutes.js  # Routes for recipes
+│── controllers/
+│    └── recipeController.js # Logic for fetching recipes
+│── models/
+│    └── recipeModel.js      # SQL queries for recipes
+│── .env            # Environment variables
+│── package.json     # Dependencies
