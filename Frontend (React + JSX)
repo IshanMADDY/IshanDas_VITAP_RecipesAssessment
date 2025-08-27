@@ -1,0 +1,59 @@
+(i) RecipeTable.jsx
+
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Rating from 'react-rating-stars-component';
+
+export default function RecipeTable() {
+  const [recipes, setRecipes] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(15);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    axios.get(`/api/recipes?page=${page}&limit=${limit}`)
+      .then(res => {
+        setRecipes(res.data.data);
+        setTotal(res.data.total);
+      });
+  }, [page, limit]);
+
+  return (
+    <div>
+      {recipes.length ? (
+        <table>
+          <thead><tr><th>Title</th><th>Cuisine</th><th>Rating</th><th>Total Time</th><th>Serves</th></tr></thead>
+          <tbody>
+            {recipes.map(r => (
+              <tr key={r.id}>
+                <td>{r.title}</td>
+                <td>{r.cuisine}</td>
+                <td><Rating value={r.rating || 0} edit={false} size={20} /></td>
+                <td>{r.total_time}</td>
+                <td>{r.serves}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (<div>No results</div>)}
+    </div>
+  );
+}
+
+(ii) App.js
+
+
+import React from 'react';
+import RecipeTable from './RecipeTable';
+
+function App() {
+  return (
+    <div>
+      <h1>Recipe Browser</h1>
+      <RecipeTable />
+    </div>
+  );
+}
+
+export default App;
